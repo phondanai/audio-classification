@@ -1,6 +1,6 @@
 # coding= UTF-8
 #
-# Author: Fing
+# Original Author: Fing
 # Date  : 2017-12-03
 #
 
@@ -24,26 +24,28 @@ X_train, X_test, y_train, y_test = train_test_split(
 # Build the Neural Network
 model = Sequential()
 
-model.add(Conv1D(64, 3, activation='relu', input_shape=(193, 1)))
+#model.add(Conv1D(64, 3, activation='relu', input_shape=(193, 1)))
+model.add(Conv1D(64, 3, activation='relu', input_shape=(90, 1))) # 90 for CQCC
 model.add(Conv1D(64, 3, activation='relu'))
 model.add(MaxPooling1D(3))
 model.add(Conv1D(128, 3, activation='relu'))
 model.add(Conv1D(128, 3, activation='relu'))
 model.add(GlobalAveragePooling1D())
 model.add(Dropout(0.5))
-model.add(Dense(10, activation='softmax'))
+model.add(Dense(2, activation='softmax')) # 2 classes
 
 model.compile(loss='categorical_crossentropy',
               optimizer='rmsprop',
               metrics=['accuracy'])
 
 # Plot model
+# Required graphviz and pydot
 # from keras.utils import plot_model
 # plot_model(model, to_file='model.png')
 
 # Convert label to onehot
-y_train = keras.utils.to_categorical(y_train - 1, num_classes=10)
-y_test = keras.utils.to_categorical(y_test - 1, num_classes=10)
+y_train = keras.utils.to_categorical(y_train - 1, num_classes=2)
+y_test = keras.utils.to_categorical(y_test - 1, num_classes=2)
 
 X_train = np.expand_dims(X_train, axis=2)
 X_test = np.expand_dims(X_test, axis=2)

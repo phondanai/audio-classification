@@ -1,6 +1,6 @@
 # coding= UTF-8
 #
-# Author: Fing
+# Original Author: Fing
 # Date  : 2017-12-03
 #
 
@@ -30,8 +30,8 @@ model.compile(optimizer='rmsprop',
               metrics=['accuracy'])
 
 # Convert label to onehot
-y_train = keras.utils.to_categorical(y_train-1, num_classes=10)
-y_test = keras.utils.to_categorical(y_test-1, num_classes=10)
+y_train = keras.utils.to_categorical(y_train-1, num_classes=2)
+y_test = keras.utils.to_categorical(y_test-1, num_classes=2)
 
 # Train and test
 model.fit(X_train, y_train, epochs=1000, batch_size=64)

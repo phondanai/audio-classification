@@ -1,6 +1,6 @@
 # coding= UTF-8
 #
-# Author: Fing
+# Original Author: Fing
 # Date  : 2017-12-03
 #
 
@@ -63,3 +63,4 @@ print("acc=%0.3f" % acc)
 #     y_true, y_pred = y_test, clf.predict(X_test)
 #     print(classification_report(y_true, y_pred))
 #     print('')
+
