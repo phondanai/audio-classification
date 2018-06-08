@@ -19,7 +19,7 @@ def is_zero_value_inside(data):
 
 
 def load_train_data(dataset):
-    """Load data from MATLAB `.dat` file and convert to numpy array.
+    """Load data from MATLAB `.mat` file and convert to numpy array.
 
     :param dataset: name of dataset can be 'train', 'dev' and  'eval'
 
