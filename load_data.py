@@ -18,15 +18,18 @@ def is_zero_value_inside(data):
     return results
 
 
-def load_train_data(dataset):
+def load_data(dataset, avg=False):
     """Load data from MATLAB `.mat` file and convert to numpy array.
 
     :param dataset: name of dataset can be 'train', 'dev' and  'eval'
+    :param avg:     Default is `False` if set to `True` the data will be reshape to (90,) by
+                    averaging data                
 
     Usage::
-        train_features = load_train_data('train')
-        dev_features = load_train_data('dev')
-        eval_features = load_train_data('eval')
+        train_features = load_data('train')
+        train_features_avg = load_data('train', avg=True)
+        dev_features = load_data('dev')
+        eval_features = load_data('eval')
     """
     
     # Not using these variable right now.
@@ -34,9 +37,11 @@ def load_train_data(dataset):
     #data_size = data_dict[dataset]
     
     f = h5py.File('/home/kasorn/anti_spoof/cqcc_feature.mat', mode='r')
-    train_data = f.get('{}FeatureCell'.format(dataset)).value[0]
-    
-    data = np.array([np.array(f[i]) for i in train_data])
+    mat_data = f.get('{}FeatureCell'.format(dataset)).value[0]
+    if avg: 
+        data = np.array([np.mean(np.array(f[i]), axis=0) for i in mat_data])
+    else:
+        data = np.array([np.array(f[i]) for i in mat_data])
 
     contain_zero = is_zero_value_inside(data)
 
@@ -48,12 +53,13 @@ def load_train_data(dataset):
     return data
 
 # Usage example
-#train_features = load_train_data('train')
+#train_features = load_data('train', avg=True)
 
 #if isinstance(train_features, np.ndarray):
 #    print(train_features[0])
+#    print(train_features[0].shape)
 #    save = input('Wanna save?: ')
 #    if save == 'yes':
-#        print("saving file to ", "/tmp/train_feat.npy")
-#        np.save('/tmp/train_feat.npy', train_features)
+#        print("saving file to ", "npy/cqcc_train_feat_2.npy")
+#        np.save('npy/cqcc_train_feat_3.npy', train_features)
 
